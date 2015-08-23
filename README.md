@@ -4,6 +4,8 @@
 
 The organisational tool I've always wanted, but haven't been able to find.
 
+**NOTE** this is design by README - I haven't actually built anything yet
+
 Features it should eventually have:
 
 - projects and tasks
