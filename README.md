@@ -1,6 +1,6 @@
 # tagmoscope
 
-From the Ancient Greek τάγμα (tágma, “something which has been ordered or arranged”) and σκοπέω (skopeō, "I look at").
+> Tagmoscope (noun). _From the Ancient Greek τάγμα (tágma, “something which has been ordered or arranged”) and σκοπέω (skopeō, "I look at")._
 
 The organisational tool I've always wanted, but haven't been able to find.
 
@@ -16,6 +16,7 @@ Features it should eventually have:
 - views
   - high level view across all projects - perhaps as a mind map
   - tasks
+    - all task views allow creation of new tasks/projects
     - kanban board (overall or per project)
     - list (overall or per projects)
     - can be filtered or ranked by 'stagnation' or conversely` 'activity'
@@ -28,4 +29,4 @@ Features it should eventually have:
     - some way of visualising how thinking changes over time (NLP analysis of task descriptions?)
     - times completed vs missed for deadlines, durations and repetitions, total or over time
 - other
-  - sync with github issues
+  - sync with github issues, but can also work independently
