@@ -1,10 +1,9 @@
-# tagmoscope
+# tagma
 
-> Tagmoscope (noun). _From the Ancient Greek τάγμα (tágma, “something which has been ordered or arranged”) and σκοπέω (skopeō, "I look at")._
+> Tagma - The organisational tool we've always wanted, but haven't been able to find (noun) [_Ancient Greek τάγμα, tágma:  “something which has been ordered or arranged”_].
 
-The organisational tool I've always wanted, but haven't been able to find.
 
-**NOTE** this is design by README - I haven't actually built anything yet
+**NOTE** this is design by README - we haven't actually built anything yet
 
 Features it should eventually have:
 
