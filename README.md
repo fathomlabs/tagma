@@ -10,6 +10,7 @@ Features it should eventually have:
 - projects and tasks
   - can be assigned guilt - there's a button or something to increment the guilt for an item. Intuition: "how often do I feel bad for not having done this?"
   - can be assigned priors or weights - a numerical or categorical field. Intution: "how important do I *think* this is?"
+  - can depend on one another (such that one is only activated after the other is completed)
   - timing
     - complex frequencies (e.g. at least twice a week, every day, once a month on the 6th, etc.)
     - deadlines
