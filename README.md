@@ -29,5 +29,10 @@ Features it should eventually have:
     - projects by activity (some visual marker of the relative activity on projects)
     - some way of visualising how thinking changes over time (NLP analysis of task descriptions?)
     - times completed vs missed for deadlines, durations and repetitions, total or over time
-- other
+- data storage
   - sync with github issues, but can also work independently
+  - export to some standard todo-list format?
+- app
+  - webapp (node? ... meteor?)
+  - desktop app (webapp packaged with e.g. electron)
+  - mobile apps (webapp packaged with e.g. cordova?)
