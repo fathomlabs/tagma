@@ -1,12 +1,11 @@
 /* CSS declarations go here */
 
-span.project {
+span.weeny-badge {
   margin-left: 7px;
-  padding: 4px;
+  padding: 5px;
   font-weight: 300;
   font-size: 0.8rem;
   color: #fff;
-  background-color: #26a69a;
   border-radius: 2px;
 }
 

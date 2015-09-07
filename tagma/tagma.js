@@ -10,8 +10,15 @@ if (Meteor.isClient) {
   });
 
   Template.taskPopout.events({
-    "click .delete": function () {
+    "click .delete": function (event) {
+      event.stopPropagation();
+
       Tasks.remove(this._id);
+    },
+    "click .guilt": function (event) {
+      event.stopPropagation();
+
+      Tasks.update(this._id, { $inc : { "guilt" : 1 } });
     }
   });
 
@@ -37,6 +44,7 @@ if (Meteor.isClient) {
         title: title,
         project: project,
         content: content,
+        guilt: 0,
         createdAt: new Date() // current time
       });
 
