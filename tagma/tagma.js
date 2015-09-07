@@ -24,6 +24,8 @@ if (Meteor.isClient) {
       // Prevent default browser form submit
       event.preventDefault();
 
+      console.log(event.type);
+
       // Get value from form element
       var title = event.target.title.value;
       var project = event.target.project.value;

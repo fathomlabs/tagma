@@ -138,8 +138,8 @@
           <textarea name="content" class="materialize-textarea" style="margin-bottom: 0;" placeholder="Task description"></textarea>
         </div>
         <div class="card-action">
-          <button class="btn-flat waves-effect waves-green" type="submit" name="action">Add</button>
-          <button class="btn-flat waves-effect waves-red right" onclick="$('#add-form')[0].reset(); setTimeout(function() {$('#add-panel').hide() }, 300);">Cancel</button>
+          <button class="btn-flat waves-effect waves-green" type="submit" name="add">Add</button>
+          <button class="btn-flat waves-effect waves-red right" type="button" name="cancel" onclick="$('#add-form')[0].reset(); setTimeout(function() {$('#add-panel').hide() }, 300);">Cancel</button>
         </div>
       </form>
     </div>
