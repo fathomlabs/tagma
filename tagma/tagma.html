@@ -1,14 +1,98 @@
 <head>
   <title>tagma</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+  <div class="container">
+    <!-- Page Content goes here -->
 
-  {{> hello}}
+    {{> header}}
+
+    {{> search}}
+
+    {{> taskList}}
+
+  </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="header">
+  <div class="text-center">
+    <center><strong><h1 class="text-center">
+      <span class="light-blue-text">T</span>
+      <span class="teal-text">A</span>
+      <span class="lime-text">G</span>
+      <span class="amber-text">M</span>
+      <span class="deep-orange-text">A</span>
+    </h1></strong></center>
+  </div>
+</template>
+
+<template name="search">
+  <div class="row">
+    <nav class="white">
+      <div class="nav-wrapper">
+        <form>
+          <div class="input-field">
+            <input id="search" type="search" required>
+            <label for="search"><i class="material-icons blue-grey-text">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+      </div>
+    </nav>
+  </div>
+</template>
+
+<template name="taskList">
+  <div class="col s12 m8 offset-m2 l6 offset-l3">
+    <ul class="collapsible popout" data-collapsible="expandable">
+      {{#each tasks}}
+        {{> taskPopout}}
+      {{/each}}
+      <!-- {{> taskCard}} -->
+    </ul>
+  </div>
+</template>
+
+<template name="taskPopout">
+  <li>
+    <div class="collapsible-header" style="height: 3.2rem;">
+      <span>{{title}}</span>
+      <span class="project">{{project}}</span>
+      <span class="right">
+        <!-- guilt -->
+        <a href="#"><i class="material-icons orange-text">add_alert</i></a>
+        <!-- delete -->
+        <i class="material-icons red-text">delete</i>
+        <!-- complete -->
+        <i class="material-icons green-text">done</i>
+      </span>
+    </div>
+    <div class="collapsible-body"><p>{{content}}</p></div>
+  </li>
+</template>
+
+<template name="taskCard">
+  <div class="card grey lighten-5 z-depth-1">
+
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">{{title}}<i class="material-icons right">more_vert</i></span>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text">{{title}}<i class="material-icons right">close</i></span>
+      <p>{{content}}</p>
+    </div>
+    <div class="card-action right-align">
+      <a class="btn-floating red"><i class="material-icons">report_problem</i></a>
+      <a class="btn-floating blue"><i class="material-icons">not-interested</i></a>
+      <a class="btn-floating green"><i class="material-icons">done</i></a>
+    </div>
+
+  </div>
+
 </template>
