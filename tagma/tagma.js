@@ -1,12 +1,61 @@
 Tasks = new Mongo.Collection("tasks");
 
+if (Meteor.isServer) {
+  SearchSource.defineSource('tasks', function(searchText, options) {
+    var options = {sort: {isoScore: -1}, limit: 20};
+
+    if (searchText) {
+      var regExp = buildRegExp(searchText);
+      var selector = {$or: [
+        {title: regExp},
+        {content: regExp},
+        {project: regExp}
+      ]};
+
+      return Tasks.find(selector, options).fetch();
+    } else {
+      return Tasks.find({}, options).fetch();
+    }
+  });
+
+  function buildRegExp(searchText) {
+    // this is a dumb implementation
+    var parts = searchText.trim().split(/[ \-\:]+/);
+    return new RegExp("(" + parts.join('|') + ")", "ig");
+  }
+}
+
 if (Meteor.isClient) {
   // This code only runs on the client
 
+  var options = {
+    keepHistory: 1000 * 60 * 5,
+    localSearch: true
+  };
+  var fields = ['title', 'project', 'content'];
+
+  TaskSearch = new SearchSource('tasks', fields, options);
+
   Template.taskList.helpers({
-    tasks: function () {
-      return Tasks.find({});
+    tasks: function() {
+      return TaskSearch.getData({
+        transform: function(matchText, regExp) {
+          return matchText;
+        },
+        sort: {isoScore: -1}
+      });
+    },
+
+    isLoading: function() {
+      return TaskSearch.getStatus().loading;
     }
+  });
+
+  Template.search.events({
+    "keyup #search": _.throttle(function(e) {
+      var text = $(e.target).val().trim();
+      TaskSearch.search(text);
+    }, 200)
   });
 
   Template.taskPopout.events({
@@ -53,5 +102,10 @@ if (Meteor.isClient) {
       setTimeout(function() { $('#add-panel').hide(); }, 300);
     }
   });
+
+  Template.body.rendered = function() {
+    // load all tasks by default
+    TaskSearch.search('');
+  };
 
 }
