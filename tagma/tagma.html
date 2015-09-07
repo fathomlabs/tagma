@@ -8,6 +8,13 @@
 </head>
 
 <body>
+
+  <script>
+    $(document).ready(function(){
+      $('.collapsible').collapsible();
+    });
+  </script>
+
   <div class="container">
     <!-- Page Content goes here -->
 
@@ -17,7 +24,12 @@
 
     {{> taskList}}
 
+    {{> actionButton}}
+
   </div>
+
+  {{> addButton}}
+
 </body>
 
 <template name="header">
@@ -40,7 +52,6 @@
           <div class="input-field">
             <input id="search" type="search" required>
             <label for="search"><i class="material-icons blue-grey-text">search</i></label>
-            <i class="material-icons">close</i>
           </div>
         </form>
       </div>
@@ -50,7 +61,7 @@
 
 <template name="taskList">
   <div class="col s12 m8 offset-m2 l6 offset-l3">
-    <ul class="collapsible popout" data-collapsible="expandable">
+    <ul class="collapsible popout" data-collapsible="accordion">
       {{#each tasks}}
         {{> taskPopout}}
       {{/each}}
@@ -60,20 +71,26 @@
 </template>
 
 <template name="taskPopout">
-  <li>
-    <div class="collapsible-header" style="height: 3.2rem;">
-      <span>{{title}}</span>
+  <li class="task">
+    <div class="collapsible-header">
+      <span class="task-title">{{title}}</span>
       <span class="project">{{project}}</span>
-      <span class="right">
+      <span class="task-btns right">
         <!-- guilt -->
-        <a href="#"><i class="material-icons orange-text">add_alert</i></a>
+        <a href="#!" class="orange-text">
+          <i class="material-icons">add_alert</i>
+        </a>
         <!-- delete -->
-        <i class="material-icons red-text">delete</i>
+        <a href="#!" class="red-text delete">
+          <i class="material-icons">delete</i>
+        </a>
         <!-- complete -->
         <i class="material-icons green-text">done</i>
       </span>
     </div>
-    <div class="collapsible-body"><p>{{content}}</p></div>
+    <div class="collapsible-body">
+      {{#markdown}}{{content}}{{/markdown}}
+    </div>
   </li>
 </template>
 
@@ -95,4 +112,36 @@
 
   </div>
 
+</template>
+
+<template name="actionButton">
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a id="add-task-btn" class="btn-floating btn-large red" onclick="$('#add-panel').show();">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
+</template>
+
+<template name="addButton">
+  <div id="add-panel" style="position: absolute; bottom:0; right: 100px; display: none; width: 300px;">
+    <div class="card col s8 offset-s2" style="padding: 0;">
+      <form id="add-form">
+        <div class="card-content grey-text">
+          <input placeholder="Task title" name="title" type="text" class="validate card-title grey-text">
+          <input placeholder="Project" name="project" type="text" class="validate">
+          <textarea name="content" class="materialize-textarea" style="margin-bottom: 0;" placeholder="Task description"></textarea>
+        </div>
+        <div class="card-action">
+          <button class="btn-flat waves-effect waves-green" type="submit" name="action">Add</button>
+          <button class="btn-flat waves-effect waves-red right" onclick="$('#add-form')[0].reset(); setTimeout(function() {$('#add-panel').hide() }, 300);">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </template>

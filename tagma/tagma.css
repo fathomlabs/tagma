@@ -9,3 +9,14 @@ span.project {
   background-color: #26a69a;
   border-radius: 2px;
 }
+
+.task-btns{
+display: none;
+}
+.task:hover .task-btns{
+display : block;
+}
+
+.task-title{
+  color: "grey";
+}
