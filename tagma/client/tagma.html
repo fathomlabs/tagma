@@ -1,0 +1,203 @@
+<head>
+  <title>tagma</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <script>
+    $(document).ready(function(){
+      $('.collapsible').collapsible();
+    });
+  </script>
+
+  <div class="container">
+    <!-- Page Content goes here -->
+
+    {{> header}}
+
+    {{> search}}
+
+    {{> taskList}}
+
+    {{> actionButton}}
+
+  </div>
+
+  {{> addTaskPanel}}
+
+</body>
+
+<template name="header">
+  <div class="text-center">
+    <center><strong><h1 class="text-center">
+      <span class="light-blue-text">T</span>
+      <span class="teal-text">A</span>
+      <span class="lime-text">G</span>
+      <span class="amber-text">M</span>
+      <span class="deep-orange-text">A</span>
+    </h1></strong></center>
+  </div>
+</template>
+
+<template name="search">
+  <div class="row">
+    <nav class="white">
+      <div class="nav-wrapper">
+        <form>
+          <div class="input-field">
+            <input id="search" type="search" required>
+            <label for="search"><i class="material-icons blue-grey-text">search</i></label>
+          </div>
+        </form>
+      </div>
+    </nav>
+  </div>
+</template>
+
+<template name="taskList">
+  {{#if loading}}
+    {{>spinner}}
+  {{else}}
+  <div class="col s12 m8 offset-m2 l6 offset-l3">
+    <ul class="collapsible popout" data-collapsible="accordion">
+      {{#each tasks}}
+        {{> taskPopout}}
+      {{/each}}
+      <!-- {{> taskCard}} -->
+    </ul>
+  </div>
+  {{/if}}
+</template>
+
+<template name="taskPopout">
+  <li class="task">
+    <div class="collapsible-header">
+      <span class="task-title grey-text text-darken-3" style="width: 200px;"><strong>{{title}}</strong></span>
+      <span class="project weeny-badge light-blue lighten-2">project <strong>{{project}}</strong></span>
+      <span class="weeny-badge orange lighten-2">guilt <strong>{{guilt}}</strong></span>
+      <span class="task-btns right">
+        <!-- edit -->
+        <a href="#!" class="teal-text edit">
+          <i class="material-icons">edit</i>
+        </a>
+        <!-- complete -->
+        <a href="#!" class="lime-text complete">
+          <i class="material-icons">done</i>
+        </a>
+        <!-- guilt -->
+        <a href="#!" class="orange-text guilt">
+          <i class="material-icons">add_alert</i>
+        </a>
+        <!-- delete -->
+        <a href="#!" class="red-text delete">
+          <i class="material-icons">delete</i>
+        </a>
+
+      </span>
+    </div>
+    <div class="collapsible-body">
+      {{#markdown}}{{content}}{{/markdown}}
+    </div>
+  </li>
+</template>
+
+<template name="taskCard">
+  <div class="card grey lighten-5 z-depth-1">
+
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">{{title}}<i class="material-icons right">more_vert</i></span>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text">{{title}}<i class="material-icons right">close</i></span>
+      <p>{{content}}</p>
+    </div>
+    <div class="card-action right-align">
+      <a class="btn-floating red"><i class="material-icons">report_problem</i></a>
+      <a class="btn-floating blue"><i class="material-icons">not-interested</i></a>
+      <a class="btn-floating green"><i class="material-icons">done</i></a>
+    </div>
+
+  </div>
+
+</template>
+
+<template name="actionButton">
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a id="add-task-btn" class="btn-floating btn-large deep-orange" onclick="$('#add-panel').show();">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating light-blue"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating teal"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating lime"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating amber"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
+</template>
+
+<template name="addTaskPanel">
+  <div id="add-panel" style="position: absolute; bottom:0; right: 100px; display: none; width: 300px;">
+    <div class="card col s8 offset-s2" style="padding: 0;">
+      <form id="add-form">
+        <div class="card-content grey-text">
+          <input placeholder="Task title" name="title" type="text" class="validate card-title grey-text">
+          <input placeholder="Project" name="project" type="text" class="validate">
+          <textarea name="content" class="materialize-textarea" style="margin-bottom: 0;" placeholder="Task description"></textarea>
+        </div>
+        <div class="card-action">
+          <button class="btn-flat waves-effect waves-green" type="submit" name="add">Add</button>
+          <button class="btn-flat waves-effect waves-red right" type="button" name="cancel" onclick="$('#add-form')[0].reset(); setTimeout(function() {$('#add-panel').hide() }, 300);">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<template name="spinner">
+  <div class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+
+    <div class="spinner-layer spinner-red">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+
+    <div class="spinner-layer spinner-yellow">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+
+    <div class="spinner-layer spinner-green">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+</template>
