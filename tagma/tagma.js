@@ -52,31 +52,37 @@ if (Meteor.isClient) {
   });
 
   Template.search.events({
-    "keyup #search": _.throttle(function(e) {
-      var text = $(e.target).val().trim();
+    "keyup #search": _.throttle(function(event) {
+      var text = $(event.target).val().trim();
       TaskSearch.search(text);
     }, 200)
   });
 
+
+
   Template.taskPopout.events({
-    "click .delete": function (event) {
+    "click .delete": function(event) {
       event.stopPropagation();
 
       Tasks.remove(this._id);
+
+      TaskSearch.search();
     },
-    "click .guilt": function (event) {
+    "click .guilt": function(event) {
       event.stopPropagation();
 
       Tasks.update(this._id, { $inc : { "guilt" : 1 } });
+
+      TaskSearch.search();
     }
   });
 
-  Template.taskPopout.rendered = function () {
+  Template.taskPopout.rendered = function() {
     $('.collapsible').collapsible();
   }
 
   Template.body.events({
-    "submit #add-form": function (event) {
+    "submit #add-form": function(event) {
       // Prevent default browser form submit
       event.preventDefault();
 
@@ -95,17 +101,20 @@ if (Meteor.isClient) {
         content: content,
         guilt: 0,
         createdAt: new Date() // current time
+      }, {}, function() {
+        TaskSearch.search();
       });
 
       // Clear form
       event.target.reset();
       setTimeout(function() { $('#add-panel').hide(); }, 300);
+
     }
   });
 
   Template.body.rendered = function() {
     // load all tasks by default
-    TaskSearch.search('');
+    TaskSearch.search();
   };
 
 }
