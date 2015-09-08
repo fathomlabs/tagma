@@ -1,5 +1,5 @@
 var options = {
-  keepHistory: 1000 * 60 * 5,
+  keepHistory: 500,
   localSearch: true
 };
 var fields = ['title', 'project', 'content'];
@@ -31,19 +31,19 @@ Template.search.events({
 
 
 Template.taskPopout.events({
-  "click .delete": function(event) {
+  "escaped-click .delete": function(event) {
     event.stopPropagation();
 
     Tasks.remove(this._id);
 
-    TaskSearch.search();
+    TaskSearch.search(TaskSearch.getCurrentQuery());
   },
-  "click .guilt": function(event) {
+  "escaped-click .guilt": function(event) {
     event.stopPropagation();
 
     Tasks.update(this._id, { $inc : { "guilt" : 1 } });
 
-    TaskSearch.search();
+    TaskSearch.search(TaskSearch.getCurrentQuery());
   },
   "escaped-click .edit": function(event) {
     event.stopPropagation();
@@ -67,13 +67,6 @@ Template.taskPopout.events({
     }
 
     return false;
-  },
-  "click .task-btns > a": function(event) {
-    console.log('clicky');
-    event.stopImmediatePropagation();
-    event.stopPropagation();
-    event.preventDefault();
-    return false;
   }
 });
 
@@ -82,9 +75,19 @@ Template.taskPopout.onRendered(function() {
 
   // hackety-hack - don't collapse the task if user clicks
   // on the buttons
-  $(this.firstNode).find('.task-btns > a').on('click.collapse', function(e) {
+  var buttons = $(this.firstNode).find('.task-btns > a');
+
+  buttons.on('click.collapse', function(e) {
     e.stopPropagation();
     $(e.target).trigger('escaped-click');
+  });
+
+  buttons.mouseover(function() {
+    $(this).addClass('text-lighten-3');
+  });
+
+  buttons.mouseout(function() {
+    $(this).removeClass('text-lighten-3');
   });
 });
 
