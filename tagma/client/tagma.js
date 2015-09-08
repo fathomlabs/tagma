@@ -44,12 +44,49 @@ Template.taskPopout.events({
     Tasks.update(this._id, { $inc : { "guilt" : 1 } });
 
     TaskSearch.search();
+  },
+  "escaped-click .edit": function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    var containerid = this._id + '_content';
+
+    var container = $('#' + containerid);
+
+    if (container.hasClass('with-editor')) {
+      container.removeClass('with-editor');
+      container.find('[id^=epiceditor-wrapper]').remove();
+      $('#epicarea' + containerid).remove();
+    } else {
+      Epic.create(containerid, {
+        textarea: containerid + '_ta',
+        preloadText: this.content
+      });
+      $('#epicarea' + containerid).hide();
+      container.addClass('with-editor');
+    }
+
+    return false;
+  },
+  "click .task-btns > a": function(event) {
+    console.log('clicky');
+    event.stopImmediatePropagation();
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
   }
 });
 
-Template.taskPopout.rendered = function() {
-  $('.collapsible').collapsible();
-}
+Template.taskPopout.onRendered(function() {
+  $('.collapsible').collapsible()
+
+  // hackety-hack - don't collapse the task if user clicks
+  // on the buttons
+  $(this.firstNode).find('.task-btns > a').on('click.collapse', function(e) {
+    e.stopPropagation();
+    $(e.target).trigger('escaped-click');
+  });
+});
 
 Template.body.events({
   "submit #add-form": function(event) {

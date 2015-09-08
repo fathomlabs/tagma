@@ -100,8 +100,9 @@
 
       </span>
     </div>
-    <div class="collapsible-body">
+    <div id="{{_id}}_content" class="collapsible-body" style="min-height: 150px;">
       {{#markdown}}{{content}}{{/markdown}}
+      <textarea id="{{_id}}_content_ta" style="display: none;"></textarea>
     </div>
   </li>
 </template>
