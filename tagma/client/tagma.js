@@ -31,21 +31,21 @@ Template.search.events({
 
 
 Template.taskPopout.events({
-  "escaped-click .delete": function(event) {
+  "escaped-click .task-delete": function(event) {
     event.stopPropagation();
 
     Tasks.remove(this._id);
 
     TaskSearch.search(TaskSearch.getCurrentQuery());
   },
-  "escaped-click .guilt": function(event) {
+  "escaped-click .task-guilt": function(event) {
     event.stopPropagation();
 
     Tasks.update(this._id, { $inc : { "guilt" : 1 } });
 
     TaskSearch.search(TaskSearch.getCurrentQuery());
   },
-  "escaped-click .edit": function(event) {
+  "escaped-click .task-edit": function(event) {
     event.stopPropagation();
     event.preventDefault();
 
@@ -83,11 +83,11 @@ Template.taskPopout.onRendered(function() {
   });
 
   buttons.mouseover(function() {
-    $(this).addClass('text-lighten-3');
+    $(this).removeClass('text-lighten-3');
   });
 
   buttons.mouseout(function() {
-    $(this).removeClass('text-lighten-3');
+    $(this).addClass('text-lighten-3');
   });
 });
 
