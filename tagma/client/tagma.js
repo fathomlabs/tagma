@@ -71,7 +71,12 @@ Template.taskPopout.events({
 });
 
 Template.taskPopout.onRendered(function() {
+  // initialise collapsible
   $('.collapsible').collapsible()
+  // initialise tooltips
+  $('.tooltipped').tooltip({
+    delay: 0
+  });
 
   // hackety-hack - don't collapse the task if user clicks
   // on the buttons

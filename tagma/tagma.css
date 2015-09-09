@@ -9,13 +9,34 @@ span.weeny-badge {
   border-radius: 2px;
 }
 
-.task-btns{
-display: none;
-}
-.task:hover .task-btns{
-display : block;
+.collapsible-header {
+  position: relative;
 }
 
-.task-title{
+.task-btns {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  float: right;
+  background-color: white;
+  z-index: 1000;
+  height: 100%;
+  text-align: right;
+  margin-left: 50px;
+}
+.task:hover .task-btns {
+  display : block;
+}
+
+.task-title {
   color: "grey";
+}
+
+.material-tooltip {
+  z-index: 1501;
+}
+
+.backdrop {
+  background-color: rgba(50, 50, 50, 0.8);
 }

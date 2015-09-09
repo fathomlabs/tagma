@@ -12,6 +12,7 @@
   <script>
     $(document).ready(function(){
       $('.collapsible').collapsible();
+      $('.tooltipped').tooltip({delay: 0});
     });
   </script>
 
@@ -68,7 +69,6 @@
       {{#each tasks}}
         {{> taskPopout}}
       {{/each}}
-      <!-- {{> taskCard}} -->
     </ul>
   </div>
   {{/if}}
@@ -78,24 +78,28 @@
   <li class="task">
     <div class="collapsible-header">
       <span class="task-title grey-text text-darken-3" style="width: 200px;"><strong>{{title}}</strong></span>
-      <span class="project weeny-badge light-blue lighten-2">project <strong>{{project}}</strong></span>
-      <span class="weeny-badge orange lighten-2">guilt <strong>{{guilt}}</strong></span>
+      <span class="project weeny-badge light-blue lighten-2 tooltipped" data-tooltip="project">
+        <i class="material-icons" style="font-size: 1rem; display: inline; float: none; margin-right: 3px; vertical-align: bottom;">work</i><strong>{{project}}</strong>
+      </span>
+      <span class="weeny-badge orange lighten-2 tooltipped" data-tooltip="guilt">
+        <i class="material-icons" style="font-size: 1rem; display: inline; float: none; margin-right: 3px; vertical-align: bottom;">warning</i><strong>{{guilt}}</strong>
+      </span>
       <span class="task-btns right">
         <!-- edit -->
         <a href="#!" class="teal-text task-edit text-lighten-3">
-          <i class="material-icons">edit</i>
+          <i class="material-icons tooltipped" data-tooltip="edit">edit</i>
         </a>
         <!-- complete -->
         <a href="#!" class="green-text task-complete text-lighten-3">
-          <i class="material-icons">done</i>
+          <i class="material-icons tooltipped" data-tooltip="complete">check_box</i>
         </a>
         <!-- guilt -->
         <a href="#!" class="orange-text task-guilt text-lighten-3">
-          <i class="material-icons">add_alert</i>
+          <i class="material-icons tooltipped" data-tooltip="add guilt">add_alert</i>
         </a>
         <!-- delete -->
         <a href="#!" class="red-text task-delete text-lighten-3">
-          <i class="material-icons">delete</i>
+          <i class="material-icons tooltipped" data-tooltip="delete">delete</i>
         </a>
 
       </span>
@@ -107,30 +111,10 @@
   </li>
 </template>
 
-<template name="taskCard">
-  <div class="card grey lighten-5 z-depth-1">
-
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4">{{title}}<i class="material-icons right">more_vert</i></span>
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text">{{title}}<i class="material-icons right">close</i></span>
-      <p>{{content}}</p>
-    </div>
-    <div class="card-action right-align">
-      <a class="btn-floating red"><i class="material-icons">report_problem</i></a>
-      <a class="btn-floating blue"><i class="material-icons">not-interested</i></a>
-      <a class="btn-floating green"><i class="material-icons">done</i></a>
-    </div>
-
-  </div>
-
-</template>
-
 <template name="actionButton">
   <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
     <a id="add-task-btn" class="btn-floating btn-large deep-orange" onclick="$('#add-panel').show();">
-      <i class="large material-icons">mode_edit</i>
+      <i class="large material-icons tooltipped" data-tooltip="new task" data-position="left">mode_edit</i>
     </a>
     <ul>
       <li><a class="btn-floating light-blue"><i class="material-icons">insert_chart</i></a></li>
