@@ -1,0 +1,12 @@
+html { padding:10px; }
+
+body {
+  border:0;
+  background:white;
+  font-size:14px;
+  color:#616161;
+  line-height:1.35em;
+  padding:10px;
+  margin:0;
+  font-family:Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+}

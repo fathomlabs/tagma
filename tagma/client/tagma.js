@@ -54,14 +54,33 @@ Template.taskPopout.events({
     var container = $('#' + containerid);
 
     if (container.hasClass('with-editor')) {
+
+      // get contents of editor, then destroy it
+      var textarea = $('#epicarea' + containerid);
+      var content = textarea.val();
+      textarea.remove();
+      container.find('#epiceditor-wrapper').remove();
+      container.find('iframe').remove();
+
+      // update the task popout contents
+      var converter = new Showdown.converter();
+      container.html(converter.makeHtml(content));
       container.removeClass('with-editor');
-      container.find('[id^=epiceditor-wrapper]').remove();
-      $('#epicarea' + containerid).remove();
+
+      Tasks.update(this._id, { '$set': { 'content': content }});
+
     } else {
-      Epic.create(containerid, {
+      var opts = {
+        basePath: '/epic',
+        theme: {
+          base: '/base.css',
+          preview: '/preview.css',
+          editor: '/editor.css'
+        },
         textarea: containerid + '_ta',
         preloadText: this.content
-      });
+      }
+      Epic.create(containerid, opts);
       $('#epicarea' + containerid).hide();
       container.addClass('with-editor');
     }
