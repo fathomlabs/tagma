@@ -1,10 +1,25 @@
-var options = {
-  keepHistory: 500,
-  localSearch: true
-};
-var fields = ['title', 'project', 'content'];
 
-TaskSearch = new SearchSource('tasks', fields, options);
+var sorts = {
+  'created-desc': { created_at: -1 },
+  'created-asc': { created_at: 1 },
+  'guilt-desc': { guilt: -1 }
+}
+function searchTasks(query) {
+  var regExp = buildRegExp(query);
+  var selector = {
+    $or: [
+      { title: { $regex: regExp } },
+      { content: { $regex: regExp } },
+      { project: { $regex: regExp } }
+    ]
+  };
+  Session.set('task_query', selector);
+}
+function buildRegExp(query) {
+  // this is a dumb implementation
+  var parts = query.trim().split(/[ \-\:]+/);
+  return "(" + parts.join('|') + ")";
+}
 
 
 // setup markdown parser to use syntax highlighting
@@ -22,24 +37,23 @@ Markdown = mark;
 
 Template.taskList.helpers({
   tasks: function() {
-    return TaskSearch.getData({
-      transform: function(matchText, regExp) {
-        return matchText;
-      },
-      sort: {isoScore: -1}
-    });
-  },
-
-  isLoading: function() {
-    return TaskSearch.getStatus().loading;
+    var query = Session.get('task_query') || {};
+    var sort = sorts[Session.get('task_sort')] || { created_at: -1 };
+    return Tasks.find(query, { sort: sort });
   }
 });
 
 Template.search.events({
   "keyup #search": _.throttle(function(event) {
     var text = $(event.target).val().trim();
-    TaskSearch.search(text);
-  }, 200)
+    searchTasks(text);
+  }, 200),
+  "click #sort-dropdown a": function(event) {
+    var sort = event.target.id.replace('sort-', '');
+    Session.set('task_sort', sort);
+    console.log('clicky', sort);
+    $('#sort-dropdown').mouseout();
+  }
 });
 
 
@@ -49,15 +63,11 @@ Template.taskPopout.events({
     event.stopPropagation();
 
     Tasks.remove(this._id);
-
-    TaskSearch.search(TaskSearch.getCurrentQuery());
   },
   "escaped-click .task-guilt": function(event) {
     event.stopPropagation();
 
     Tasks.update(this._id, { $inc : { "guilt" : 1 } });
-
-    TaskSearch.search(TaskSearch.getCurrentQuery());
   },
   "escaped-click .task-edit": function(event) {
     event.stopPropagation();
@@ -139,13 +149,10 @@ Template.body.events({
     // Prevent default browser form submit
     event.preventDefault();
 
-    console.log(event.type);
-
     // Get value from form element
     var title = event.target.title.value;
     var project = event.target.project.value;
     var content = event.target.content.value;
-
 
     // Insert a task into the collection
     Tasks.insert({
@@ -153,19 +160,16 @@ Template.body.events({
       project: project,
       content: content,
       guilt: 0,
-      createdAt: new Date() // current time
-    }, {}, function() {
-      TaskSearch.search();
+      created_at: new Date() // current time
     });
 
     // Clear form
     event.target.reset();
-    setTimeout(function() { $('#add-panel').hide(); }, 300);
-
+    $('#add-panel').hide();
   }
 });
 
 Template.body.rendered = function() {
-  // load all tasks by default
-  TaskSearch.search();
+  Session.set('task_query', '');
+  Session.set('task_sort', 'created-desc');
 };

@@ -53,6 +53,12 @@
           <div class="input-field">
             <input id="search" type="search" required>
             <label for="search"><i class="material-icons blue-grey-text">search</i></label>
+            <a href="#" data-activates="sort-dropdown" data-hover="true" data-beloworigin="true" data-constrainwidth="false" style="display: box; float: right; position: absolute; right: 15px; top: 0;" class="dropdown-button"><i class="material-icons blue-grey-text">sort</i></a>
+            <ul id="sort-dropdown" class="dropdown-content">
+              <li><a href="#!" id="sort-created-desc"><i class="material-icons">trending_down</i> created</a></li>
+              <li><a href="#!" id="sort-created-asc"><i class="material-icons">trending_up</i> created</a></li>
+              <li><a href="#!" id="sort-guilt-desc"><i class="material-icons">trending_down</i> guilt</a></li>
+            </ul>
           </div>
         </form>
       </div>
@@ -61,7 +67,7 @@
 </template>
 
 <template name="taskList">
-  {{#if loading}}
+  {{#if isLoading}}
     {{>spinner}}
   {{else}}
   <div class="col s12 m8 offset-m2 l6 offset-l3">
@@ -81,9 +87,9 @@
       <span class="project weeny-badge light-blue lighten-2 tooltipped" data-tooltip="project">
         <i class="material-icons" style="font-size: 1rem; display: inline; float: none; margin-right: 3px; vertical-align: bottom;">work</i><strong>{{project}}</strong>
       </span>
-      <span class="weeny-badge orange lighten-2 tooltipped" data-tooltip="guilt">
+      {{#if guilt}}<span class="weeny-badge orange lighten-2 tooltipped" data-tooltip="guilt">
         <i class="material-icons" style="font-size: 1rem; display: inline; float: none; margin-right: 3px; vertical-align: bottom;">warning</i><strong>{{guilt}}</strong>
-      </span>
+      </span>{{/if}}
       <span class="task-btns right">
         <!-- edit -->
         <a href="#!" class="teal-text task-edit text-lighten-3">
@@ -145,44 +151,46 @@
 </template>
 
 <template name="spinner">
-  <div class="preloader-wrapper big active">
-    <div class="spinner-layer spinner-blue">
-      <div class="circle-clipper left">
-        <div class="circle"></div>
-      </div><div class="gap-patch">
-        <div class="circle"></div>
-      </div><div class="circle-clipper right">
-        <div class="circle"></div>
+  <div class="row center">
+    <div class="preloader-wrapper small active">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
       </div>
-    </div>
 
-    <div class="spinner-layer spinner-red">
-      <div class="circle-clipper left">
-        <div class="circle"></div>
-      </div><div class="gap-patch">
-        <div class="circle"></div>
-      </div><div class="circle-clipper right">
-        <div class="circle"></div>
+      <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
       </div>
-    </div>
 
-    <div class="spinner-layer spinner-yellow">
-      <div class="circle-clipper left">
-        <div class="circle"></div>
-      </div><div class="gap-patch">
-        <div class="circle"></div>
-      </div><div class="circle-clipper right">
-        <div class="circle"></div>
+      <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
       </div>
-    </div>
 
-    <div class="spinner-layer spinner-green">
-      <div class="circle-clipper left">
-        <div class="circle"></div>
-      </div><div class="gap-patch">
-        <div class="circle"></div>
-      </div><div class="circle-clipper right">
-        <div class="circle"></div>
+      <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
       </div>
     </div>
   </div>
