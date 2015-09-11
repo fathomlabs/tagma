@@ -13,6 +13,41 @@ span.weeny-badge {
   position: relative;
 }
 
+.collapsible-body {
+  overflow: none;
+  height: auto;
+}
+
+.task-content {
+  padding: 10px;
+  overflow: none;
+  min-height: 150px;
+  width: 100%;
+  height: auto;
+}
+
+.task-content img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.task-content iframe {
+  min-height: 150px;
+}
+
+.task-content ul {
+  padding-left: 10px;
+}
+
+.task-content li {
+  list-style: square inside;
+}
+
+.task-content p {
+  padding: 5px;
+}
+
 .task-btns {
   display: none;
   position: absolute;
@@ -39,4 +74,31 @@ span.weeny-badge {
 
 .backdrop {
   background-color: rgba(50, 50, 50, 0.8);
+}
+
+code {
+  background-color: #f2f2f2;
+  background-color: rgba(40, 40, 0, 0.06);
+}
+
+pre {
+  background-color: #f2f2f2;
+  background-color: rgba(40, 40, 0, 0.06);
+  margin: 10px 0;
+  overflow: hidden;
+  padding: 15px;
+  white-space: pre-wrap;
+}
+
+pre code {
+  font-size: 100%;
+  background-color: transparent;
+}
+
+.hljs-keyword {
+  color: #ff8a65
+}
+
+.hljs-function {
+  color: #607d8b
 }

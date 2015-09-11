@@ -6,6 +6,20 @@ var fields = ['title', 'project', 'content'];
 
 TaskSearch = new SearchSource('tasks', fields, options);
 
+
+// setup markdown parser to use syntax highlighting
+// and Github-flavour markdown
+var mark = marked;
+mark.setOptions({
+  gfm: true,
+  tables: true,
+  breaks: true,
+  highlight: function (code) {
+    return hljs.highlightAuto(code).value;
+  }
+});
+Markdown = mark;
+
 Template.taskList.helpers({
   tasks: function() {
     return TaskSearch.getData({
@@ -56,31 +70,33 @@ Template.taskPopout.events({
     if (container.hasClass('with-editor')) {
 
       // get contents of editor, then destroy it
-      var textarea = $('#epicarea' + containerid);
-      var content = textarea.val();
+      var textarea = container.parent().find('textarea');
+      var content = $.trim(textarea.val());
       textarea.remove();
-      container.find('#epiceditor-wrapper').remove();
       container.find('iframe').remove();
 
-      // update the task popout contents
-      var converter = new Showdown.converter();
-      container.html(converter.makeHtml(content));
+      // update the task popout contents and resize
+      container.html(Markdown(content));
       container.removeClass('with-editor');
+      container.css({ height: 'auto' });
 
       Tasks.update(this._id, { '$set': { 'content': content }});
+      this.content = content;
 
     } else {
       var opts = {
         basePath: '/epic',
         theme: {
           base: '/base.css',
-          preview: '/preview.css',
           editor: '/editor.css'
         },
-        textarea: containerid + '_ta',
-        preloadText: this.content
+        preloadText: this.content,
+        autogrow: true,
+        focusOnLoad: true,
+        button: false
       }
       Epic.create(containerid, opts);
+      container.find('iframe').css({ height: 'auto' });
       $('#epicarea' + containerid).hide();
       container.addClass('with-editor');
     }
@@ -99,7 +115,7 @@ Template.taskPopout.onRendered(function() {
 
   // hackety-hack - don't collapse the task if user clicks
   // on the buttons
-  var buttons = $(this.firstNode).find('.task-btns > a');
+  var buttons = this.$('.task-btns > a');
 
   buttons.on('click.collapse', function(e) {
     e.stopPropagation();
@@ -113,6 +129,9 @@ Template.taskPopout.onRendered(function() {
   buttons.mouseout(function() {
     $(this).addClass('text-lighten-3');
   });
+
+  this.$('.task-content p').addClass('flow-text');
+
 });
 
 Template.body.events({

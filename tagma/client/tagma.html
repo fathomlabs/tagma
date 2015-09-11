@@ -87,7 +87,7 @@
       <span class="task-btns right">
         <!-- edit -->
         <a href="#!" class="teal-text task-edit text-lighten-3">
-          <i class="material-icons tooltipped" data-tooltip="edit">edit</i>
+          <i class="material-icons tooltipped" data-tooltip="toggle edit mode">edit</i>
         </a>
         <!-- complete -->
         <a href="#!" class="green-text task-complete text-lighten-3">
@@ -104,9 +104,10 @@
 
       </span>
     </div>
-    <div id="{{_id}}_content" class="collapsible-body" style="min-height: 150px;">
-      {{#markdown}}{{content}}{{/markdown}}
-      <textarea id="{{_id}}_content_ta" style="display: none;"></textarea>
+    <div class="collapsible-body flow-text" style="min-height: 150px;">
+      <div id="{{_id}}_content" class="task-content">
+        {{#markdown}}{{content}}{{/markdown}}
+      </div>
     </div>
   </li>
 </template>
