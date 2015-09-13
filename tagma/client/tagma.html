@@ -53,12 +53,7 @@
           <div class="input-field">
             <input id="search" type="search" required>
             <label for="search"><i class="material-icons blue-grey-text">search</i></label>
-            <a href="#" data-activates="sort-dropdown" data-hover="true" data-beloworigin="true" data-constrainwidth="false" style="display: box; float: right; position: absolute; right: 15px; top: 0;" class="dropdown-button"><i class="material-icons blue-grey-text">sort</i></a>
-            <ul id="sort-dropdown" class="dropdown-content">
-              <li><a href="#!" id="sort-created-desc"><i class="material-icons">trending_down</i> created</a></li>
-              <li><a href="#!" id="sort-created-asc"><i class="material-icons">trending_up</i> created</a></li>
-              <li><a href="#!" id="sort-guilt-desc"><i class="material-icons">trending_down</i> guilt</a></li>
-            </ul>
+            {{> sortAndFilter}}
           </div>
         </form>
       </div>
@@ -82,7 +77,7 @@
 
 <template name="taskPopout">
   <li class="task">
-    <div class="collapsible-header">
+    <div class="collapsible-header {{#if completed}}grey lighten-2{{/if}}">
       <span class="task-title grey-text text-darken-3" style="width: 200px;"><strong>{{title}}</strong></span>
       <span class="project weeny-badge light-blue lighten-2 tooltipped" data-tooltip="project">
         <i class="material-icons" style="font-size: 1rem; display: inline; float: none; margin-right: 3px; vertical-align: bottom;">work</i><strong>{{project}}</strong>
@@ -97,7 +92,11 @@
         </a>
         <!-- complete -->
         <a href="#!" class="green-text task-complete text-lighten-3">
+          {{#if completed}}
+          <i class="material-icons tooltipped" data-tooltip="un-complete">check_box_outline_blank</i>
+          {{else}}
           <i class="material-icons tooltipped" data-tooltip="complete">check_box</i>
+          {{/if}}
         </a>
         <!-- guilt -->
         <a href="#!" class="orange-text task-guilt text-lighten-3">
@@ -193,5 +192,25 @@
         </div>
       </div>
     </div>
+  </div>
+</template>
+
+<template name="sortAndFilter">
+  <a href="#" data-activates="sort-dropdown" data-hover="true" data-beloworigin="true" data-constrainwidth="false" style="display: box; float: right; position: absolute; right: 15px; top: 0;" class="dropdown-button"><i class="material-icons blue-grey-text">sort</i></a>
+  <div id="sort-dropdown" class="dropdown-content">
+    <form action="#">
+        <p class="grey-text">Sort</p>
+        <p id="sort-radiogroup">
+        <input class="with-gap" name="sort" value="sort-created-desc" type="radio" id="sort-created-desc" checked="checked" />
+        <label for="sort-created-desc">Created desc</label><br>
+        <input class="with-gap" name="sort" value="sort-created-asc" type="radio" id="sort-created-asc" />
+        <label for="sort-created-asc">Created asc</label><br>
+        <input class="with-gap" name="sort" value="sort-guilt-desc" type="radio" id="sort-guilt-desc" />
+        <label for="sort-guilt-desc">Guilt desc</label></p>
+        <hr>
+        <p class="grey-text">Filter</p>
+        <input type="checkbox" class="filled-in" id="filter-show-checked" />
+        <label for="filter-show-checked">Show completed</label>
+    </form>
   </div>
 </template>

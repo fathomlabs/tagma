@@ -1,5 +1,16 @@
 /* CSS declarations go here */
 
+#sort-dropdown {
+  width: auto;
+  min-width:200;
+  padding: 15px;
+  line-height: 1rem;
+}
+
+#sort-dropdown hr {
+  margin: 5px;
+}
+
 #sort-dropdown i {
   top: auto;
   bottom: auto;
@@ -45,10 +56,23 @@ span.weeny-badge {
 
 .task-content ul {
   padding-left: 10px;
+  list-style: none;
 }
 
-.task-content li {
-  list-style: square inside;
+.task-content ul li {
+  list-style: inside;
+}
+
+.task-content ol {
+    list-style: none;
+    margin: 0px 0px 0px 10px;
+    padding: 0;
+    counter-reset: num;
+}
+
+.task-content ol li:before {
+    content: counter(num) '. ';
+    counter-increment: num;
 }
 
 .task-content p {
@@ -61,7 +85,7 @@ span.weeny-badge {
   right: 0;
   top: 0;
   float: right;
-  background-color: white;
+  background-color: inherit;
   z-index: 1000;
   height: 100%;
   text-align: right;

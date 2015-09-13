@@ -5,15 +5,28 @@ var sorts = {
   'guilt-desc': { guilt: -1 }
 }
 function searchTasks(query) {
-  var regExp = buildRegExp(query);
-  var selector = {
-    $or: [
-      { title: { $regex: regExp } },
-      { content: { $regex: regExp } },
-      { project: { $regex: regExp } }
-    ]
-  };
-  Session.set('task_query', selector);
+  var selector = {}
+  if (query && query.length > 0) {
+    var regExp = buildRegExp(query);
+    selector = {
+      $or: [
+        { title: { $regex: regExp } },
+        { content: { $regex: regExp } },
+        { project: { $regex: regExp } }
+      ]
+    };
+  }
+  var showComplete = Session.get('task_show_complete');
+  if (!showComplete) {
+    selector = {
+      $and: [
+        { completed: false },
+        selector
+      ]
+    }
+  }
+  var sort = sorts[Session.get('task_sort')] || { created_at: -1 };
+  return Tasks.find(selector, { sort: sort });
 }
 function buildRegExp(query) {
   // this is a dumb implementation
@@ -37,28 +50,43 @@ Markdown = mark;
 
 Template.taskList.helpers({
   tasks: function() {
-    var query = Session.get('task_query') || {};
-    var sort = sorts[Session.get('task_sort')] || { created_at: -1 };
-    return Tasks.find(query, { sort: sort });
+    var query = Session.get('task_query') || '';
+    return searchTasks(query);
   }
 });
 
 Template.search.events({
   "keyup #search": _.throttle(function(event) {
     var text = $(event.target).val().trim();
-    searchTasks(text);
-  }, 200),
-  "click #sort-dropdown a": function(event) {
-    var sort = event.target.id.replace('sort-', '');
-    Session.set('task_sort', sort);
+    Session.set('task_query', text);
+  }, 200)
+});
+
+Template.sortAndFilter.events({
+  'change #sort-radiogroup input': function(event) {
+    var sort = $('#sort-radiogroup input[name=sort]:checked').val();
     console.log('clicky', sort);
+    Session.set('task_sort', sort.replace('sort-', ''));
     $('#sort-dropdown').mouseout();
+  },
+  'change #filter-show-checked': function(event) {
+    var show = $('#filter-show-checked').is(":checked");
+    Session.set('task_show_complete', show);
+    console.log(show);
   }
 });
 
-
-
 Template.taskPopout.events({
+  "escaped-click .task-complete": function(event) {
+    event.stopPropagation();
+
+    Tasks.update(this._id, {
+      '$set': {
+        'completed': !this.completed
+      }
+    });
+    this.completed = !this.completed;
+  },
   "escaped-click .task-delete": function(event) {
     event.stopPropagation();
 
@@ -160,6 +188,7 @@ Template.body.events({
       project: project,
       content: content,
       guilt: 0,
+      completed: false,
       created_at: new Date() // current time
     });
 
@@ -172,4 +201,5 @@ Template.body.events({
 Template.body.rendered = function() {
   Session.set('task_query', '');
   Session.set('task_sort', 'created-desc');
+  Session.set('task_show_complete', false);
 };
