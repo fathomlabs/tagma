@@ -17,6 +17,19 @@
   display: inline-block;
 }
 
+#add-task-modal {
+  max-height: 90%;
+}
+
+#add-task-frequency-modal {
+  width: auto;
+  max-width: 400px;
+}
+
+.modal {
+  z-index: 1601;
+}
+
 span.weeny-badge {
   margin-left: 7px;
   padding: 5px;
@@ -28,6 +41,7 @@ span.weeny-badge {
 
 .collapsible-header {
   position: relative;
+  overflow: hidden;
 }
 
 .collapsible-body {

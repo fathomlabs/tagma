@@ -76,6 +76,21 @@ Template.sortAndFilter.events({
   }
 });
 
+Template.actionButton.onRendered(function() {
+  this.$('.modal-trigger').leanModal();
+});
+
+Template.actionButton.events({
+  "click #add-task-btn": function(event) {
+    // $('#add-task-panel').openModal();
+    $('#add-task-btn').closeFAB();
+  }
+});
+
+Template.addTaskFrequencyModal.onRendered(function() {
+  this.$('select').material_select();
+});
+
 Template.taskPopout.events({
   "escaped-click .task-complete": function(event) {
     event.stopPropagation();
@@ -181,6 +196,12 @@ Template.body.events({
     var title = event.target.title.value;
     var project = event.target.project.value;
     var content = event.target.content.value;
+    var duedate = event.target.duedate.value;
+    var frequency = event.target.frequency.value;
+
+    if (duedate.length = 0) {
+      duedate = undefined;
+    }
 
     // Insert a task into the collection
     Tasks.insert({
@@ -189,12 +210,35 @@ Template.body.events({
       content: content,
       guilt: 0,
       completed: false,
+      due_at: duedate,
+      frequency: frequency,
       created_at: new Date() // current time
     });
 
     // Clear form
     event.target.reset();
-    $('#add-panel').hide();
+    $('#add-task-modal').closeModal();
+  },
+  "focus #add-task-frequency": function(event) {
+    $('#add-task-frequency-modal').openModal();
+  },
+  "click #add-task-frequency-modal-choose": function(event) {
+    console.log(event);
+    // Prevent default browser form submit
+    event.preventDefault();
+
+    // Get values
+    var form = $('#add-task-frequency-form')[0];
+    console.log(form);
+    var number = form.number.value;
+    var timeperiod = form.timeperiod.value;
+
+    $('#add-task-frequency').val(number + " times a " + timeperiod);
+
+    $('#add-task-frequency-form').reset();
+  },
+  "click #add-task-frequency-modal-clear": function(event) {
+    $('#add-task-frequency').value = "";
   }
 });
 
@@ -202,4 +246,9 @@ Template.body.rendered = function() {
   Session.set('task_query', '');
   Session.set('task_sort', 'created-desc');
   Session.set('task_show_complete', false);
+  $('.datepicker').pickadate({
+    selectMonths: true,
+    selectYears: 10,
+    min: new Date()
+  });
 };
