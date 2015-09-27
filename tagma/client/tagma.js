@@ -1,4 +1,5 @@
-
+Tasks = new Mongo.Collection("tasks");
+Meteor.subscribe('tasks');
 
 Template.taskList.helpers({
   tasks: function() {
@@ -110,6 +111,12 @@ Template.taskPopout.events({
   }
 });
 
+Template.taskPopout.helpers({
+  hasProject: function() {
+    return !!this.project && this.project.length > 0;
+  }
+});
+
 Template.taskPopout.onRendered(function() {
   // initialise collapsible
   $('.collapsible').collapsible()
@@ -194,7 +201,7 @@ Template.body.events({
   }
 });
 
-Template.body.rendered = function() {
+Template.body.onRendered(function() {
   Session.set('task_query', '');
   Session.set('task_sort', 'created-desc');
   Session.set('task_show_complete', false);
@@ -203,4 +210,19 @@ Template.body.rendered = function() {
     selectYears: 10,
     min: new Date()
   });
-};
+});
+
+Template.addTaskModal.onRendered(function() {
+  AutoCompletion.init("#add-task-project");
+});
+
+Template.addTaskModal.events = {
+  'keyup #add-task-project': function () {
+    AutoCompletion.autocomplete({
+      element: '#add-task-project',
+      collection: Tasks,
+      field: 'project',
+      limit: 10
+    }, _.uniq);
+  }
+}

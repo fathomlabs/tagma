@@ -80,9 +80,9 @@
   <li class="task">
     <div class="collapsible-header {{#if completed}}grey lighten-5{{/if}}">
       <span class="task-title grey-text text-darken-3" style="width: 200px;"><strong>{{title}}</strong></span>
-      <span class="project weeny-badge light-blue lighten-2 tooltipped" data-tooltip="project">
+      {{#if hasProject}}<span class="project weeny-badge light-blue lighten-2 tooltipped" data-tooltip="project">
         <i class="material-icons" style="font-size: 1rem; display: inline; float: none; margin-right: 3px; vertical-align: bottom;">work</i><strong>{{project}}</strong>
-      </span>
+      </span>{{/if}}
       {{#if guilt}}<span class="weeny-badge orange lighten-2 tooltipped" data-tooltip="guilt">
         <i class="material-icons" style="font-size: 1rem; display: inline; float: none; margin-right: 3px; vertical-align: bottom;">warning</i><strong>{{guilt}}</strong>
       </span>{{/if}}
@@ -133,14 +133,14 @@
 </template>
 
 <template name="addTaskModal">
-  <div class="modal bottom-sheet" id="add-task-modal">
+  <div class="modal" id="add-task-modal">
     <form id="add-form">
       <div class="modal-content" style="padding-bottom: 0;">
         <div class="input-field">
           <input placeholder="Task title" name="title" type="text" class="validate card-title grey-text">
         </div>
         <div class="input-field">
-          <input placeholder="Project" name="project" type="text" class="validate">
+          <input placeholder="Project" id="add-task-project" name="project" type="text" class="validate">
         </div>
         {{> addTaskTimeSettings}}
         <div class="input-field">
