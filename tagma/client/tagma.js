@@ -188,7 +188,6 @@ Template.body.events({
 
     // Get values
     var form = $('#add-task-frequency-form')[0];
-    console.log(form);
     var number = form.number.value;
     var timeperiod = form.timeperiod.value;
 
