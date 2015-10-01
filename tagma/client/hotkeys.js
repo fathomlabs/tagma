@@ -3,7 +3,13 @@ globalHotkeys = new Hotkeys();
 globalHotkeys.add({
   combo : "n",
   callback : function(){
-    $('#add-task-modal').openModal();
+    $('#add-task-modal').openModal({
+      in_duration: 200,
+      out_duration: 200,
+      ready: function() {
+        $('input[name="title"]').delay(205).focus();
+      }
+    });
   }
 });
 
