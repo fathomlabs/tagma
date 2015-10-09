@@ -142,9 +142,19 @@ pre code {
 }
 
 .hljs-keyword {
-  color: #ff8a65
+  color: #ff8a65;
 }
 
 .hljs-function {
-  color: #607d8b
+  color: #607d8b;
+}
+
+
+/* Toast box styling */
+#toast-container {
+  top: 3%;
+  right: 2%;
+}
+.buttered-toast {
+  opacity: 0.7 !important;
 }

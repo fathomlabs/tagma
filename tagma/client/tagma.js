@@ -41,7 +41,6 @@ Template.actionButton.onRendered(function() {
 
 Template.actionButton.events({
   "click #add-task-btn": function(event) {
-    // $('#add-task-panel').openModal();
     $('#add-task-btn').closeFAB();
   }
 });
