@@ -49,6 +49,11 @@ span.weeny-badge {
   height: auto;
 }
 
+.overdue-icon {
+  margin-right: 4px !important;
+  margin-left: -6px !important;
+}
+
 .task-content {
   padding: 10px;
   overflow: none;

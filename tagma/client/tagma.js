@@ -119,6 +119,16 @@ Template.taskPopout.events({
 Template.taskPopout.helpers({
   hasProject: function() {
     return !!this.project && this.project.length > 0;
+  },
+  overdue: function() {
+    return !!this.due_at && !this.completed &&
+           (+(new Date(this.due_at)) <= +(new Date()));
+  },
+  overdueBy: function() {
+    var due_at = moment(new Date(this.due_at));
+    var now = moment(new Date());
+    var daysover = now.diff(due_at, 'days') + 1;
+    return daysover + ' days overdue';
   }
 });
 

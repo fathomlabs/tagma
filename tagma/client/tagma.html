@@ -79,14 +79,24 @@
 <template name="taskPopout">
   <li class="task">
     <div class="collapsible-header {{#if completed}}grey lighten-5{{/if}}">
-      <span class="task-title grey-text text-darken-3" style="width: 200px;"><strong>{{title}}</strong></span>
+      <span class="task-title grey-text text-darken-3" style="width: 200px;">
+        <strong>{{title}}</strong></span>
       {{#if hasProject}}<span class="project weeny-badge light-blue lighten-2 tooltipped" data-tooltip="project">
         <i class="material-icons" style="font-size: 1rem; display: inline; float: none; margin-right: 3px; vertical-align: bottom;">work</i><strong>{{project}}</strong>
       </span>{{/if}}
       {{#if guilt}}<span class="weeny-badge orange lighten-2 tooltipped" data-tooltip="guilt">
         <i class="material-icons" style="font-size: 1rem; display: inline; float: none; margin-right: 3px; vertical-align: bottom;">warning</i><strong>{{guilt}}</strong>
       </span>{{/if}}
-      {{#if due_at}}<span class="blue-grey-text text-lighten-4" style="margin-left: 10px;">{{due_at}}</span>{{/if}}
+      <!-- due_at -->
+      {{#if due_at}}
+      <span class="{{#if overdue}}red-text{{else}}blue-grey-text text-lighten-4{{/if}} right" style="margin-left: 10px;">
+        {{#if overdue}}
+          <a href="#!" class="red-text"><i class="material-icons overdue-icon">error_outline</i></a>{{overdueBy}}
+        {{else}}
+        {{due_at}}
+        {{/if}}
+      </span>
+      {{/if}}
       <span class="task-btns right">
         <!-- edit -->
         <a href="#!" class="teal-text task-edit text-lighten-3">

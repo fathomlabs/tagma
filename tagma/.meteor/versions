@@ -32,6 +32,7 @@ meteorhacks:search-source@1.4.0
 minifiers@1.1.5
 minimongo@1.0.8
 mobile-status-bar@1.0.3
+momentjs:moment@2.10.6
 mongo@1.1.0
 mousetrap:mousetrap@1.4.6_1
 mrt:jquery-ui@1.9.2
