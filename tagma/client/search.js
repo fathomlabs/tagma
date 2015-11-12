@@ -27,7 +27,45 @@ searchTasks = function(query) {
     }
   }
   var sort = sorts[Session.get('task_sort')] || { created_at: -1 };
-  return Tasks.find(selector, { sort: sort });
+  var result = Tasks.find(selector, { sort: sort });
+  populateStats(result);
+  return result;
+}
+
+function populateStats(raw_result) {
+  // Filter out completed tasks
+  var result = raw_result.fetch().filter(function(t) {
+    return !(t.completed);
+  });
+
+  // Number of tasks
+  n_tasks = result.length;
+  Session.set('n_tasks', n_tasks);
+
+  // Number of projects
+  var n_projects = _.uniq(result.map(function(t) {
+    return t.project;
+  })).length;
+  Session.set('n_projects', n_projects);
+
+  // Due this week
+  var week_end = moment().endOf('isoWeek');
+  var tasks_weekdue = result.filter(function(t) {
+    var due_at = moment(t.due_at);
+    return t.due_at && // has a due date
+      (due_at > moment()) && // due after now
+      (due_at < week_end); // due before end of week
+  }).length;
+  Session.set('tasks_weekdue', tasks_weekdue);
+
+  // Overdue
+  var tasks_overdue = result.filter(function(t) {
+    var due_at = moment(t.due_at);
+    return t.due_at && // has a due date
+      (due_at < moment()) // due before now
+  }).length;
+  Session.set('tasks_overdue', tasks_overdue);
+
 }
 
 function buildRegExp(query) {

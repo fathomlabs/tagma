@@ -15,6 +15,21 @@ Template.search.events({
   }, 200)
 });
 
+Template.stats.helpers({
+  ntasks: function() {
+    return Session.get('n_tasks');
+  },
+  nprojects: function() {
+    return Session.get('n_projects');
+  },
+  weekdue: function() {
+    return Session.get('tasks_weekdue');
+  },
+  overdue: function() {
+    return Session.get('tasks_overdue');
+  }
+});
+
 Template.sortAndFilter.events({
   'change #sort-radiogroup input': function(event) {
     var sort = $('#sort-radiogroup input[name=sort]:checked').val();
