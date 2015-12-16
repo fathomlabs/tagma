@@ -148,8 +148,7 @@ Template.taskPopout.helpers({
 });
 
 Template.taskPopout.onRendered(function() {
-  // initialise collapsible
-  $('.collapsible').collapsible()
+
   // initialise tooltips
   $('.tooltipped').tooltip({
     delay: 0
@@ -241,6 +240,12 @@ Template.body.onRendered(function() {
     selectYears: 10,
     min: new Date()
   });
+
+  // initialise collapsible
+  $('.collapsible').collapsible({
+    accordion: false
+  })
+
 });
 
 Template.addTaskModal.onRendered(function() {
