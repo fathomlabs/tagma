@@ -214,6 +214,14 @@ Template.task_metadata.events({
   "focus .edit-task-frequency": function(event) {
     var input_id = event.target.id;
     dropdown_freq_editor(event.target);
+  },
+  'keyup .edit-task-project': function (event) {
+    AutoCompletion.autocomplete({
+      element: '#' + event.target.id,
+      collection: Tasks,
+      field: 'project',
+      limit: 10
+    }, _.uniq);
   }
 });
 
