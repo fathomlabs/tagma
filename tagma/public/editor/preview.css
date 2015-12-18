@@ -7,7 +7,7 @@ body {
   padding: 0;
   border: 0;
   outline: 0;
-  background: #fff;
+  background: white;
 }
 
 h1,
@@ -46,13 +46,11 @@ img {
 }
 
 code {
-  background-color: #f2f2f2;
-  background-color: rgba(40, 40, 0, 0.06);
+  background-color: white;
 }
 
 pre {
-  background-color: #f2f2f2;
-  background-color: rgba(40, 40, 0, 0.06);
+  background-color: white;
   margin: 10px 0;
   overflow: hidden;
   padding: 15px;
@@ -164,4 +162,3 @@ a:active,
 a:focus {
   text-decoration: underline;
 }
-        

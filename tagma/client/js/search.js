@@ -1,4 +1,11 @@
 
+Template.search.events({
+  "keyup #search": _.throttle(function(event) {
+    var text = $(event.target).val().trim();
+    Session.set('task_query', text);
+  }, 200)
+});
+
 var sorts = {
   'created-desc': { created_at: -1 },
   'created-asc': { created_at: 1 },

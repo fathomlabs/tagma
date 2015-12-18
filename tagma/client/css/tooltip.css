@@ -1,0 +1,8 @@
+
+.material-tooltip {
+  z-index: 1501;
+}
+
+.backdrop {
+  background-color: rgba(50, 50, 50, 0.8);
+}

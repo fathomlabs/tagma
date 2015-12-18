@@ -1,0 +1,17 @@
+
+#sort-dropdown {
+  width: auto;
+  min-width: 200;
+  padding: 15px;
+  line-height: 1rem;
+}
+
+#sort-dropdown hr {
+  margin: 5px;
+}
+
+#sort-dropdown i {
+  top: auto;
+  bottom: auto;
+  display: inline-block;
+}

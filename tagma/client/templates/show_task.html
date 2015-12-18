@@ -1,0 +1,151 @@
+<template name="task_popout">
+  <li class="task">
+    <div class="collapsible-header {{#if completed}}grey lighten-5{{/if}}">
+      {{> task_header}}
+    </div>
+    <div class="collapsible-body flow-text" style="min-height: 150px;">
+      <div id="{{_id}}_metadata" class="task-metadata row">
+        <form class="col s12" id="{{_id}}_metadata-form">
+        {{> task_metadata}}
+        </form>
+      </div>
+      <div id="{{_id}}_content" class="task-content row">
+        {{#markdown}}{{content}}{{/markdown}}
+      </div>
+    </div>
+  </li>
+</template>
+
+<template name="task_header">
+  {{> task_header_info}}
+  {{> task_header_buttons}}
+</template>
+
+<template name="task_header_info">
+
+  <!-- editing badge -->
+  <span id="{{_id}}-editing-badge" class="editing-badge weeny-badge amber">editing</span>
+
+  <!-- title -->
+  <span class="task-title grey-text text-darken-3" style="width: 200px;">
+    <strong>{{title}}</strong>
+  </span>
+
+  <!-- project -->
+  {{#if hasProject}}
+  <span class="project weeny-badge light-blue lighten-2 tooltipped" data-tooltip="project">
+    <i class="material-icons">work</i>
+    <strong>{{project}}</strong>
+  </span>
+  {{/if}}
+
+  <!-- guilt -->
+  {{#if guilt}}
+  <span class="weeny-badge orange lighten-2 tooltipped" data-tooltip="guilt">
+    <i class="material-icons task-guilt">warning</i>
+    <strong>{{guilt}}</strong>
+  </span>
+  {{/if}}
+
+  <!-- due_at -->
+  {{#if due_at}}
+  <span class="{{#if overdue}}red-text{{else}}blue-grey-text text-lighten-4{{/if}} right" style="margin-left: 10px;">
+    {{#if overdue}}
+      <a href="#!" class="red-text"><i class="material-icons overdue-icon">error_outline</i></a>{{overdueBy}}
+    {{else}}
+      {{due_at}}
+    {{/if}}
+  </span>
+  {{/if}}
+
+</template>
+
+<template name="task_header_buttons">
+  <span class="task-btns right">
+
+    <!-- edit -->
+    <a href="#!" id="{{_id}}-edit-button" class="teal-text task-edit text-lighten-3">
+      <i class="material-icons tooltipped" data-tooltip="toggle edit mode">edit</i>
+    </a>
+
+    <!-- complete -->
+    <a href="#!" class="green-text task-complete text-lighten-3">
+      {{#if completed}}
+      <i class="material-icons tooltipped" data-tooltip="un-complete">check_box_outline_blank</i>
+      {{else}}
+      <i class="material-icons tooltipped" data-tooltip="complete">check_box</i>
+      {{/if}}
+    </a>
+
+    <!-- guilt -->
+    <a href="#!" class="orange-text task-guilt text-lighten-3">
+      <i class="material-icons tooltipped" data-tooltip="add guilt">add_alert</i>
+    </a>
+
+    <!-- delete -->
+    <a href="#!" class="red-text task-delete text-lighten-3">
+      <i class="material-icons tooltipped" data-tooltip="delete">delete</i>
+    </a>
+
+  </span>
+</template>
+
+<template name="task_metadata">
+
+  <!-- title -->
+  <div class="input-field col s3">
+    <input value="{{title}}" placeholder="" id="{{_id}}-edit-title" type="text" class="validate" name="title">
+    <label for="{{_id}}-edit-title" class="active">Title</label>
+  </div>
+
+  <!-- project -->
+  <div class="input-field col s3">
+    <input value="{{project}}" placeholder="" id="{{_id}}-edit-project" type="text" class="validate" name="project">
+    <label for="{{_id}}-edit-project" class="active">Project</label>
+  </div>
+
+  <!-- due date -->
+  <div class="input-field col s3">
+    <input value="{{due_at}}" placeholder="None" id="{{_id}}-edit-due" type="text" class="datepicker" name="due_at">
+    <label for="{{_id}}-edit-due" type="date" class="active">Due date</label>
+  </div>
+
+  <!-- frequency -->
+  <div class="input-field col s3">
+    <input value="{{frequency}}" placeholder="None" id="{{_id}}-edit-due" type="text" class="validate edit-task-frequency" name="frequency">
+    <label for="{{_id}}-edit-freq" type="frequency" class="active">Frequency</label>
+  </div>
+
+</template>
+
+<template name="edit_task_freq_dropdown">
+  <div id="{{_id}}-edit-frequency-dropdown" class="dropdown">
+    <form class="edit-task-frequency-form">
+      <div class="modal-content" style="padding-bottom: 0;">
+        <div class="row" style="margin: 0;">
+          <div class="input-field col s4">
+            <label class="active">Number</label>
+            <input type="number" name="number" placeholder="1" class="validate" value="{{times}}">
+          </div>
+          <div class="col s4" style="padding-top: 24px;">
+            <span class="text-grey flow-text center-align">
+              <small>times a</small>
+            </span>
+          </div>
+          <div class="input-field col s4">
+            <select name="timeperiod">
+              <option value="week">week</option>
+              <option value="month">month</option>
+              <option value="year">year</option>
+            </select>
+            <label>Timeperiod</label>
+          </div>
+        </div>
+      </div>
+      <div class="dropdown-footer">
+        <a href="#!" class="edit-task-frequency-dd-clear modal-close waves-effect waves-red btn-flat left">Clear</a>
+        <a href="#!" class="edit-task-frequency-dd-choose modal-action modal-close submit waves-effect waves-green btn-flat right">Choose</a>
+      </div>
+    </form>
+  </div>
+</template>

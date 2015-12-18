@@ -1,0 +1,47 @@
+<head>
+  <title>tagma</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <script>
+    $(document).ready(function(){
+      $('.collapsible').collapsible();
+      $('.tooltipped').tooltip({delay: 0});
+    });
+  </script>
+
+  <div class="container">
+    <!-- Page Content goes here -->
+
+    {{> header}}
+
+    {{> search}}
+
+    {{> task_list}}
+
+    {{> actionButton}}
+
+  </div>
+
+  {{> addTaskModal}}
+  {{> addTaskFrequencyModal}}
+
+</body>
+
+<template name="header">
+  <div class="text-center">
+    <center><strong><h1 class="text-center">
+      <span class="light-blue-text">T</span>
+      <span class="teal-text">A</span>
+      <span class="lime-text">G</span>
+      <span class="amber-text">M</span>
+      <span class="deep-orange-text">A</span>
+    </h1></strong></center>
+  </div>
+</template>

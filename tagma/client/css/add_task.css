@@ -1,0 +1,12 @@
+#add-task-modal {
+  max-height: 90%;
+}
+
+#add-task-frequency-modal {
+  width: auto;
+  max-width: 400px;
+}
+
+.modal {
+  z-index: 1601;
+}

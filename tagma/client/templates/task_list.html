@@ -1,0 +1,66 @@
+<template name="task_list">
+  {{#if isLoading}}
+    {{>spinner}}
+  {{else}}
+  {{> stats}}
+  <div class="col s12 m8 offset-m2 l6 offset-l3">
+    <ul class="collapsible popout" data-collapsible="accordion">
+      {{#each tasks}}
+        {{> task_popout}}
+      {{/each}}
+    </ul>
+  </div>
+  {{/if}}
+</template>
+
+<template name="spinner">
+  <div class="row center">
+    <div class="preloader-wrapper small active">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="stats">
+  <div class="row">
+    Showing {{ntasks}} open tasks in {{nprojects}} projects. {{weekdue}} tasks due within 48 hours, and {{overdue}} tasks overdue.
+  </div>
+</template>

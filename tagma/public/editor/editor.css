@@ -1,0 +1,10 @@
+body {
+  min-height: 130px !important;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background-color: white !important;
+  color: #616161;
+  line-height: 1.35em;
+  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+}
